@@ -1,11 +1,24 @@
 ## Think of it like this
 
+### Remember 
+Product + ProductBuilder 
+```
+ProductBuilder = 
+1. copy same variables of product class
+2. have a constructor(req fields) + make setters(for optional fields) 
+3. build() method create a new product ka obj and return it
+```
+```
+How to Use :
+Product p1 = new ProductBuilder().set().set().set().build();
+```
+
 ### Without Builder
 
 The **user of the class** must remember the order of all parameters and too much reliance of constructor for obj creation.
 
-```cpp
-User u("Arush", 22, "Software Engineer", "Mumbai");
+```
+User u = new User("Arush", 22, "Software Engineer", "Mumbai");
 ```
 
 #### Problems

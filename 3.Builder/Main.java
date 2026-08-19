@@ -5,9 +5,6 @@ class User {
     private String job;
     private String location;
 
-    // PRIVATE CONSTRUCTOR Confusion point: Why private? So that nobody can create
-    // User directly. This forces everyone to use UserBuilder.
-    // Just one constructor is enough setting all the values
     User(String name, int age, String job, String location) {
         this.name = name;
         this.age = age;
@@ -48,9 +45,7 @@ class UserBuilder {
         return this;
     }
 
-    // IMP : Finally call the build method : which calls the constructor of the
-    // Product to actually make it
-    // 3. Build method in the builder which calls the actual User class
+    // IMP : Finally call the build method : which will create a new object of the product
     User build() {
         // Allowed because UserBuilder is friend of User
         return new User(name, age, job, location);
