@@ -1,27 +1,33 @@
-package Multithreading;
-
-class KitchenExample implements Runnable{ 
+class Kitchen implements Runnable{ 
     public void run(){
         //call the method having critical section code
         useOven();
     }
 
-    public void useOven(){  //Oven is one, there can be multiple threads
-        System.out.println("Order received");
+    // Oven is one, there can be multiple threads
+    public void useOven(){  
+        
+        String LOCK = "Lock";
+        // Synchronized block : 
+        // only one thread can enter at a time
+        synchronized(LOCK){
+            //Preparing the dish in here
+            System.out.println( Thread.currentThread().getName());
+            System.out.println("Preparing started");
 
-        try{Thread.sleep(1000);} //Making the order
-        catch(InterruptedException e){
-            e.printStackTrace();
+            try{Thread.sleep(1000);} 
+            catch(InterruptedException e){ e.printStackTrace();}   
+
+            System.out.println("Preparing ended");
         }
-
-        System.out.println("Order delivered");
+   
     }
 }
 
-public class Main{
+class Main{
     public static void main(String []args){
 
-        KitchenExample k = new KitchenExample();
+        Kitchen k = new Kitchen();
         Thread t1 = new Thread(k);
         Thread t2 = new Thread(k);
         Thread t3 = new Thread(k);
@@ -30,8 +36,9 @@ public class Main{
         t2.start();
         t3.start();
 
-        // Which is better : Java does not support multiple inheritance (extends multiple nhi ho skte) | but supports mutiple implements
+        // Interview qn 
+        // Which is better : extends Thread or implements Runnable
+        // Java does not support multiple inheritance (extends multiple nhi ho skte) | but supports mutiple implements
         // So, Runnable is better ==> class c1 implements Runnable,c2,c3,c4..... bohot saare implement kr skta
-
     }
 }
