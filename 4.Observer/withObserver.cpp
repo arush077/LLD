@@ -54,6 +54,21 @@ class NotificationService : public Observable{
 };
 
 // ----------------Observer and Concrete Observer--------------- //
+class AlarmService : public Observable{
+    vector<Observer*> observerList;
+public:
+    void addObserver(Observer *obs){
+        observerList.push_back(obs);
+    }
+    void removeObserver(Observer *obs){
+        // No implementation needed for now
+    }
+    void notify() override{
+        for(size_t i = 0; i < observerList.size(); ++i){
+            observerList[i]->update();
+        }
+    }
+};
 
 
 class Observer{
