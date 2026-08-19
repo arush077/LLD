@@ -64,10 +64,5 @@ public class Main {
 
         System.out.println(u1.toString());
         System.out.println(u2.toString());
-
-        // User u = new User("Arush",2,"SWE","MUM")
-        // This would give compilation error because constructor of User is private:
-        // U are only allowed to use UserBuilder to make Users and not User class to make product
-
     }
 }
