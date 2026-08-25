@@ -1,28 +1,18 @@
 import java.util.*;
 
-// Code 2: With Observer Pattern
-// Idea
+// With Observer Pattern
+
 // Subject = YouTubeChannel
 // Observers = Subscribers
 // Subscribers register themselves.
 // Channel notifies all registered subscribers.
-// Uploaded: Observer Pattern Tutorial
-// Alice received notification: Observer Pattern Tutorial
-// Bob received notification: Observer Pattern Tutorial
-// Why this is good
-// Channel does not know concrete subscriber types.
-// New subscribers can be added without changing channel code.
-// Loose coupling.
-// One upload notifies many users automatically.
-// Easy to extend and test.
-// ----------------Observable and Concrete Obserable--------------- //
 
+// ---------------- Observable and Concrete Observable ----------------
 interface Observable {
-    public void notifyObservers();
+    void notifyObservers();
 }
 
-//NotificationService is the concrete Observable [its like the context class with which user interacts]
-class NotificationService implements Observable {
+class YouTubeChannel implements Observable {
     List<Observer> observerList = new ArrayList<>();
 
     void addObserver(Observer obs) {
@@ -30,58 +20,54 @@ class NotificationService implements Observable {
     }
 
     void removeObserver(Observer obs) {
-        // observerList.remove(obs);
+        observerList.remove(obs);
     }
 
     public void notifyObservers() {
-        for (int i = 0; i < observerList.size(); i++) {
-            observerList.get(i).update();
+        for (Observer observer : observerList) {
+            observer.update();
         }
+    }
+
+    void uploadVideo(String videoTitle) {
+        System.out.println("Uploaded: " + videoTitle);
+        notifyObservers();
     }
 }
 
-
-// ----------------Observer and Concrete Observer--------------- //
-
+// ---------------- Observer and Concrete Observer ----------------
 interface Observer {
     void update();
 }
 
-
-class ConcreteObserver implements Observer {
-
-    boolean gotNotification = false;
+class Subscriber implements Observer {
     String name;
-    int age;
 
-    ConcreteObserver(String name, int age) {
+    Subscriber(String name) {
         this.name = name;
-        this.age = age;
     }
 
     public void update() {
-        gotNotification = true;
-        System.out.println("Notified");
+        System.out.println(name + " received notification");
     }
 }
 
-
-// ---------------- Main --------------- //
-
+// ---------------- Main ----------------
 public class Main {
-
     public static void main(String[] args) {
 
-        //First make concr observer
-        ConcreteObserver o1 = new ConcreteObserver("Arush", 20);
-        ConcreteObserver o2 = new ConcreteObserver("Prush", 30);
+        // First make concrete observers
+        Subscriber s1 = new Subscriber("Alice");
+        Subscriber s2 = new Subscriber("Bob");
 
-        //Then make one conc observable
-        NotificationService co = new NotificationService();
+        // Then make concrete observable
+        YouTubeChannel channel = new YouTubeChannel();
 
-        co.addObserver(o1);
-        co.addObserver(o2);
+        // Subscribers register themselves
+        channel.addObserver(s1);
+        channel.addObserver(s2);
 
-        co.notifyObservers();
+        // Channel uploads video and notifies all subscribers
+        channel.uploadVideo("Observer Pattern Tutorial");
     }
 }

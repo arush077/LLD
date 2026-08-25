@@ -2,16 +2,15 @@ class Singleton {
     // The single instance, initially null
     private static Singleton instance;
     
+     // Private constructor to prevent instantiation
+    private Singleton() {}
     
-    private Singleton() {} // Private constructor to prevent instantiation
-    
-    
-    public static Singleton getInstance() { // public static Singleton getInstance() ==> static as it should be called without obj
+    // public static Singleton getInstance() ==> static as it should be called without obj
+    public static Singleton getInstance() { 
         if (instance == null) { 
             instance = new Singleton(); 
             System.out.println("Creating new instance");
-        }
-        
+        } 
         return instance;
     }
 }

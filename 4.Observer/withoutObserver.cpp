@@ -1,37 +1,53 @@
-// Code 1: Without Observer Pattern
-// Problem
-// All subscribers are hardcoded inside the channel class.
+// Code : Without Observer Pattern
+// Issue : All subscribers are hardcoded inside the YouTubeChannel class.
 // Why this is bad
-// Channel knows every subscriber.
-// Adding a new subscriber requires editing channel code.
-// Tight coupling between channel and subscribers.
-// Notification logic is duplicated.
-// Hard to reuse and test.
-// Why Observer Pattern is needed
-// The channel should only say “a new video is uploaded”. It should not care who receives the notification.
+// YouTubeChannel knows every subscriber.
+// Adding a new subscriber requires editing YouTubeChannel code.
+// Tight coupling between YouTubeChannel and subscribers.
 
-#include <iostream>
-using namespace std;
+import java.util.*;
+
+// Without Observer Pattern
 
 class YouTubeChannel {
-public:
-    void uploadVideo(string title) {
+    List<Subscriber> subscribers = new ArrayList<>();
 
-        // Upload video
-        cout << "Uploaded: " << title << endl;
-
-        // Notify subscriber 1
-        cout << "Notify Alice" << endl;
-
-        // Notify subscriber 2
-        cout << "Notify Bob" << endl;
+    void addSubscriber(Subscriber subscriber) {
+        subscribers.add(subscriber);
     }
-};
 
-int main() {
-    YouTubeChannel channel;
+    void removeSubscriber(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
 
-    channel.uploadVideo("Observer Pattern Tutorial");
+    void uploadVideo(String videoTitle) {
+        System.out.println("Uploaded: " + videoTitle);
+        for (Subscriber subscriber : subscribers) {
+            subscriber.notifyUser();
+        }
+    }
+}
 
-    return 0;
+class Subscriber {
+    String name;
+    Subscriber(String name) {
+        this.name = name;
+    }
+
+    void notifyUser() {
+        System.out.println(name + " received notification");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Subscriber s1 = new Subscriber("Alice");
+        Subscriber s2 = new Subscriber("Bob");
+        YouTubeChannel channel = new YouTubeChannel();
+
+        channel.addSubscriber(s1);
+        channel.addSubscriber(s2);
+
+        channel.uploadVideo("Observer Pattern Tutorial");
+    }
 }

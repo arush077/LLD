@@ -1,5 +1,9 @@
 # State Design Pattern (Vending Machine)
 
+## RATTNA 
+VendingMachine HAS-A VendingMachineState interface
+
+
 ## Problem
 
 Without State Pattern:
@@ -18,55 +22,30 @@ As states grow, the class becomes full of if-else checks.
 Move behavior into separate state classes.
 
 ```text
-VendingMachine
-      |
-      v
-   State*
-   /     \
-Idle   HasMoney
+┌──────────────────────┐          ┌────────────────────────────┐
+│    VendingMachine    │          │    VendingMachineState     │
+│       Context        │          │       <<interface>>        │
+├──────────────────────┤   HAS-A  ├────────────────────────────┤
+│ balance              │ ───────► │ + insertCoin()             │
+│ currentState         │          │ + dispense()               │
+└──────────────────────┘          └─────────────┬──────────────┘
+                                                │
+                                           implements
+                                         ┌────────┴────────┐
+                                         ▼                 ▼
+                                   ┌───────────┐     ┌───────────┐
+                                   │  NoCoin   │     │  HasCoin  │
+                                   └───────────┘     └───────────┘
 ```
 
 The VendingMachine delegates work to the current state.
 
----
-
-## Pointer Intuition
-
-```cpp
-State* currentState;
-```
-
-The machine does not know which concrete state it has.
-
-It may point to:
-
-- `IdleState`
-- `HasMoneyState`
-
-Example:
-
-```cpp
-vm->setState(&hasMoneyState);
-```
-
-Meaning:
-
-> Change behavior by pointing to a different state object.
-
-Same pattern as:
-
-- `PaymentStrategy* strategy`
-- `Observer* observer`
-- `Pizza* pizza`
 
 ---
 
 ## When to use
 
-Use State Pattern when behavior changes based on the current state.
-
 Examples:
-
 - Vending Machine
 - Order Lifecycle (Created → Paid → Shipped)
 - Traffic Light

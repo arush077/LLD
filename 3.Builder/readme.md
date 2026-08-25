@@ -12,21 +12,6 @@ ProductBuilder =
 How to Use :
 Product p1 = new ProductBuilder().set().set().set().build();
 ```
-
-### Without Builder
-
-The **user of the class** must remember the order of all parameters and too much reliance of constructor for obj creation.
-
-```
-User u = new User("Arush", 22, "Software Engineer", "Mumbai");
-```
-
-#### Problems
-
-- Hard to read
-- Easy to swap parameters accidentally
-- Leads to multiple overloaded constructors
-
 ---
 
 ### With Builder
@@ -47,6 +32,30 @@ User u = UserBuilder("Arush", 22)
 - Each field is clearly named (Thanks to the setters)
 - Optional fields can be set only when needed or else they have default values
 - Avoids constructor overload explosion
+
+---
+
+### Without Builder
+
+The **user of the class** must remember the order of all parameters and too much reliance of constructor for obj creation.
+
+```
+User u = new User("Arush", "NotSet", "NotSet", "NotSet", "NotSet", "Mumbai");
+
+            |||
+
+User u = UserBuilder("Arush", 22)
+            .setJob("Software Engineer")
+            .setLocation("Mumbai")
+            .build();
+```
+
+#### Problems
+
+- Forced to mention even the all parameters even if they are unset
+- Builder pattern me u dont need to forcefully mention that as builder class will handle it 
+- Hard to read && Easy to swap parameters accidentally
+- Leads to multiple overloaded constructors
 
 ---
 
