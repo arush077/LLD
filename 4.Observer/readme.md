@@ -1,3 +1,9 @@
+## Remember
+```
+interface Observable + concrete observable(NotificationService) === notify() method
+interface Observer + concrete observer === update() method
+```
+
 ## What changed?
 
 | Without Observer | With Observer |

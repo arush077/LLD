@@ -1,12 +1,37 @@
 # Decorator Pattern (Pizza Example)
 
-## Why this code looks weird
+```
 
-```cpp
-PlainPizza base;
+                         Pizza
+                      <<interface>>
+                      /           \
+                 implements     implements + has a Pizza
+                    /               \
+                   ▼                 ▼
+            PlainPizza       PizzaDecorator
+                          <<abstract class>>
+                                 ▲
+                                 │
+                              extends
+                            ┌────┴────┐
+                            │         │
+                            ▼         ▼
+                       Onion       Tomato
 
-OnionTopping onion(&base);
-TomatoTopping TomatoOnionPizza(&onion);
+```
+PlainPizza
+    └── implements Pizza
+
+PizzaDecorator
+    ├── implements Pizza
+    └── has-a Pizza
+
+OnionTopping
+    └── extends PizzaDecorator
+
+TomatoTopping
+    └── extends PizzaDecorator   
+
 ```
 
 ### Step-by-step
@@ -31,50 +56,21 @@ base.cost() + 30 + 20 = 150
 
 ---
 
-## Pointer intuition
-
-```cpp
-Pizza* pizza;
-```
-
-The pointer can point to:
-
-- `PlainPizza`
-- `OnionTopping`
-- `TomatoTopping`
-
-The decorator only knows **“I have some Pizza.”**
-
----
-
 
 
 ## How does this solve constructor/class explosion?
 
-
-
-### Without Decorator
-
-```text
-PlainPizza
-OnionPizza
-TomatoPizza
-OnionTomatoPizza
-CheesePizza
-CheeseOnionPizza
-...
-```
-
 A new class is needed for every combination.(All possible combinations ke classes chahiye hote without Decorator Design Pattern)
 
-### With Decorator
-
-```text
-PlainPizza
-OnionTopping
-TomatoTopping
-CheeseTopping
-```
+| With Decorator(only toppings) | Without Decorator(every combn) |
+|---|---|
+| `PlainPizza` | `PlainPizza` |
+| `OnionTopping` | `OnionPizza` |
+| `TomatoTopping` | `TomatoPizza` |
+| `CheeseTopping` | `OnionTomatoPizza` |
+| | `CheesePizza` |
+| | `CheeseOnionPizza` |
+| | `...` |
 
 To get Onion + Tomato + Cheese, simply wrap them:
 
@@ -88,21 +84,21 @@ CheeseTopping(
 );
 ```
 
-Only **one class per topping** is needed.
-
 ---
 
 
-
-## Interview takeaway
-
-- **Base object** = original pizza.
-- **Decorator** = wraps another pizza.
-- **Pointer** = points to the wrapped pizza.
-- **Benefit** = add toppings dynamically and avoid subclass explosion.
-
-
 ## IMPLEMENTATION
-1. Product abs class + concrete impl(for setting the base like plain pizza)
+1. Product interface + concrete impl(for setting the base like plain pizza)
 2. Decorator abs class + multiple conc impl
-3. The step 2 wale, (decorator + conc impl) ke constructors both take the Product abs class as input parameter as a ptr
+3. Decorator implements from Pizza interface + also 'has-a' Pizza
+
+
+## 🌍 Real-World Examples
+- Java I/O Streams (`BufferedInputStream`, `BufferedOutputStream`)
+- Java `Reader` / `Writer` classes
+- GUI components (borders, scrollbars, etc.)
+- Middleware / HTTP request handlers
+- Logging wrappers
+- Authentication / Authorization wrappers
+- Caching wrappers
+- Compression / Encryption streams
