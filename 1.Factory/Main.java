@@ -1,46 +1,47 @@
 import java.util.Scanner;
 
-interface Vehicle{
-    public void createVehicle();
+interface Vehicle {
+    void drive();
 }
 
-class Car implements Vehicle{
-    public void createVehicle(){
-        System.out.println("Creating a car");
+class Car implements Vehicle {
+    public void drive() {
+        System.out.println("Driving a car");
     }
 }
 
-class Bike implements Vehicle{
-    public void createVehicle(){
-        System.out.println("Creating Bike");
-    }    
+class Bike implements Vehicle {
+    public void drive() {
+        System.out.println("Riding a bike");
+    }
 }
 
 class VehicleFactory {
-     Vehicle vehicle;
-     Vehicle getVehicle(String vehicleType) {
+
+    Vehicle createVehicle(String vehicleType) {
         if (vehicleType.equals("Car")) {
-            vehicle = new Car();
+            return new Car();
+        } else if (vehicleType.equals("Bike")) {
+            return new Bike();
         }
-        else if (vehicleType.equals("Bike")) {
-            vehicle = new Bike();
-        }
-        return vehicle;
+        throw new IllegalArgumentException("Invalid vehicle type");
     }
 }
 
-// Acts as main class 
-public class Main{
-    public static void main(String arg[]){
-    // Taking user input lmao
-    Scanner sc = new Scanner(System.in);
-    String vehicleType = sc.next();
-    // Without factory, there will be multiple if else statements in the client code
-    // if (vehicleType.equals("Car")) { vehicle = new Car(); }
-    // else if (vehicleType.equals("Bike")){ vehicle = new Bike(); }
-    
-    VehicleFactory vehicleFactory = new VehicleFactory(); //Making a factory object 
-    Vehicle vehicle =  vehicleFactory.getVehicle(vehicleType);
-    System.out.println("user chose a " + vehicle.getClass()); 
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        String vehicleType = sc.next();
+
+        //Pehle factory ka object bana and then factory.create() karna he
+        VehicleFactory vehicleFactory = new VehicleFactory();
+        Vehicle vehicle = vehicleFactory.createVehicle(vehicleType);
+
+        System.out.println("User chose a " + vehicle.getClass().getSimpleName());
+        vehicle.drive();
+
+        sc.close();
     }
 }

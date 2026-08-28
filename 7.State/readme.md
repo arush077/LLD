@@ -1,13 +1,14 @@
 # State Design Pattern (Vending Machine)
 
-## RATTNA 
-VendingMachine HAS-A VendingMachineState interface
+## RATTNA
 
+VendingMachine HAS-A VendingMachineState interface
 
 ## Problem
 
 Without State Pattern:
 If you have a common state variable which keeps changing 
+
 ```cpp
 if(state == "IDLE") ...
 else if(state == "HAS_MONEY") ...
@@ -30,22 +31,24 @@ Move behavior into separate state classes.
 │ currentState         │          │ + dispense()               │
 └──────────────────────┘          └─────────────┬──────────────┘
                                                 │
-                                           implements
-                                         ┌────────┴────────┐
-                                         ▼                 ▼
-                                   ┌───────────┐     ┌───────────┐
-                                   │  NoCoin   │     │  HasCoin  │
-                                   └───────────┘     └───────────┘
+                                             implements
+                                       ┌────────┴────────┐
+                                       ▼                 ▼
+                                  ┌───────────┐     ┌───────────┐
+                                  │  NoCoin   │     │  HasCoin  │
+                                  └───────────┘     └───────────┘
 ```
 
 The VendingMachine delegates work to the current state.
 
-
 ---
+
+
 
 ## When to use
 
 Examples:
+
 - Vending Machine
 - Order Lifecycle (Created → Paid → Shipped)
 - Traffic Light
@@ -54,6 +57,8 @@ Examples:
 - Elevator
 
 ---
+
+
 
 ## Interview Takeaway
 

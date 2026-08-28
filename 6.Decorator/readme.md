@@ -5,7 +5,7 @@
                          Pizza
                       <<interface>>
                       /           \
-                 implements     implements + has a Pizza
+                 implements     implements + "has-a" Pizza
                     /               \
                    ▼                 ▼
             PlainPizza       PizzaDecorator
@@ -19,6 +19,7 @@
                        Onion       Tomato
 
 ```
+
 PlainPizza
     └── implements Pizza
 
@@ -56,21 +57,21 @@ base.cost() + 30 + 20 = 150
 
 ---
 
-
-
 ## How does this solve constructor/class explosion?
 
 A new class is needed for every combination.(All possible combinations ke classes chahiye hote without Decorator Design Pattern)
 
+
 | With Decorator(only toppings) | Without Decorator(every combn) |
-|---|---|
-| `PlainPizza` | `PlainPizza` |
-| `OnionTopping` | `OnionPizza` |
-| `TomatoTopping` | `TomatoPizza` |
-| `CheeseTopping` | `OnionTomatoPizza` |
-| | `CheesePizza` |
-| | `CheeseOnionPizza` |
-| | `...` |
+| ----------------------------- | ------------------------------ |
+| `PlainPizza`                  | `PlainPizza`                   |
+| `OnionTopping`                | `OnionPizza`                   |
+| `TomatoTopping`               | `TomatoPizza`                  |
+| `CheeseTopping`               | `OnionTomatoPizza`             |
+|                               | `CheesePizza`                  |
+|                               | `CheeseOnionPizza`             |
+|                               | `...`                          |
+
 
 To get Onion + Tomato + Cheese, simply wrap them:
 
@@ -86,14 +87,14 @@ CheeseTopping(
 
 ---
 
-
 ## IMPLEMENTATION
+
 1. Product interface + concrete impl(for setting the base like plain pizza)
 2. Decorator abs class + multiple conc impl
 3. Decorator implements from Pizza interface + also 'has-a' Pizza
 
-
 ## 🌍 Real-World Examples
+
 - Java I/O Streams (`BufferedInputStream`, `BufferedOutputStream`)
 - Java `Reader` / `Writer` classes
 - GUI components (borders, scrollbars, etc.)
@@ -102,3 +103,4 @@ CheeseTopping(
 - Authentication / Authorization wrappers
 - Caching wrappers
 - Compression / Encryption streams
+

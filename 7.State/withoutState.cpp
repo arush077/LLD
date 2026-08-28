@@ -1,32 +1,32 @@
-#include <iostream>
-using namespace std;
-
-// Without State Pattern: lots of if-else checks
 class VendingMachine {
-    string state = "IDLE";
+    int balance=0;
 
-public:
-    void insertCoin() {
-        if (state == "IDLE") {
-            state = "HAS_COIN";
-            cout << "Coin inserted\n";
+    void insertCoin(int coins) {
+        if(balance==0) {
+            balance+=coins;
+            System.out.println("Coin inserted. Balance = "+balance);
         } else {
-            cout << "Coin already inserted\n";
+            System.out.println("Already has coin");
         }
     }
 
     void dispense() {
-        if (state == "HAS_COIN") {
-            state = "IDLE";
-            cout << "Item dispensed\n";
+        if(balance==0) {
+            System.out.println("Insert coin first");
         } else {
-            cout << "Insert coin first\n";
+            System.out.println("Dispensing item");
+            balance=0;
         }
     }
-};
+}
 
-int main() {
-    VendingMachine vm;
-    vm.insertCoin();
-    vm.dispense();
+public class Main {
+    public static void main(String[] args) {
+        VendingMachine vm=new VendingMachine();
+        vm.dispense();
+        vm.insertCoin(10);
+        vm.insertCoin(5);
+        vm.dispense();
+        vm.dispense();
+    }
 }

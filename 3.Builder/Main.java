@@ -47,7 +47,6 @@ class UserBuilder {
 
     // IMP : Finally call the build method : which will create a new object of the product
     User build() {
-        // Allowed because UserBuilder is friend of User
         return new User(name, age, job, location);
     }
 }
