@@ -23,27 +23,29 @@ As states grow, the class becomes full of if-else checks.
 Move behavior into separate state classes.
 
 ```text
-┌──────────────────────┐          ┌────────────────────────────┐
-│    VendingMachine    │          │    VendingMachineState     │
-│       Context        │          │       <<interface>>        │
-├──────────────────────┤   HAS-A  ├────────────────────────────┤
-│ balance              │ ───────► │ + insertCoin()             │
-│ currentState         │          │ + dispense()               │
-└──────────────────────┘          └─────────────┬──────────────┘
-                                                │
-                                             implements
-                                       ┌────────┴────────┐
-                                       ▼                 ▼
-                                  ┌───────────┐     ┌───────────┐
-                                  │  NoCoin   │     │  HasCoin  │
-                                  └───────────┘     └───────────┘
+┌──────────────────────────────┐       ┌────────────────────────────┐
+│             VM               │       │        VMState             │
+│         <<Context>>          │       │      <<interface>>         │
+├──────────────────────────────┤ HAS-A ├────────────────────────────┤
+│ - balance : int              │ ────► │ + insertCoin(vm, coins)    │
+│ - currentState : VMState     │       │ + dispense(vm)             │
+│ - noCoinState : NoCoin       │       └─────────────┬──────────────┘
+│ - hasCoinState : HasCoin     │                     │
+├──────────────────────────────┤                  implements
+│ + insertCoin(coins)          │            ┌────────┴────────┐
+│ + dispense()                 │            ▼                 ▼
+└──────────────────────────────┘   ┌─────────────────┐ ┌─────────────────┐
+                                   │     NoCoin      │ │     HasCoin     │
+                                   ├─────────────────┤ ├─────────────────┤
+                                   │ + insertCoin    │ │ + insertCoin    │
+                                   │   (vm, coins)   │ │   (vm, coins)   │
+                                   │ + dispense(vm)  │ │ + dispense(vm)  │
+                                   └─────────────────┘ └─────────────────┘
 ```
 
 The VendingMachine delegates work to the current state.
 
 ---
-
-
 
 ## When to use
 

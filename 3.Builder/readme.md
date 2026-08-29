@@ -1,18 +1,41 @@
 ## Think of it like this
 
-### Remember 
+### Remember
+
 Product + ProductBuilder 
+
 ```
 ProductBuilder = 
 1. copy same variables of product class
 2. have a constructor(req fields) + make setters(for optional fields) 
 3. build() method create a new product ka obj and return it
 ```
+
 ```
 How to Use :
 Product p1 = new ProductBuilder().set().set().set().build();
 ```
+
+```
+┌─────────────────────────────┐                       ┌─────────────────────────────┐
+│      Builder Class          │                       │       Product Class         │
+│                             │                       │                             │
+├─────────────────────────────┤                       ├─────────────────────────────┤
+│ - name                      │                       │ - name                      │
+│ - age                       │ ─────── build() ────► │ - age                       │
+│ - job                       │                       │ - job                       │
+│ - location                  │                       │ - location                  │
+├─────────────────────────────┤                       └─────────────────────────────┘
+│ + setJob()                  │
+│ + setLocation()             │
+│ + build() : User            │
+└─────────────────────────────┘
+
+```
+
 ---
+
+
 
 ### With Builder
 
@@ -26,6 +49,8 @@ User u = UserBuilder("Arush", 22)
             .build();
 ```
 
+
+
 #### Benefits
 
 - Much more readable
@@ -34,6 +59,8 @@ User u = UserBuilder("Arush", 22)
 - Avoids constructor overload explosion
 
 ---
+
+
 
 ### Without Builder
 
@@ -50,6 +77,8 @@ User u = UserBuilder("Arush", 22)
             .build();
 ```
 
+
+
 #### Problems
 
 - Forced to mention even the all parameters even if they are unset
@@ -62,6 +91,7 @@ User u = UserBuilder("Arush", 22)
 
 
 ### What actually happens?
+
 ```
 Builder = temporary object that collects data
                          ↓
@@ -69,3 +99,4 @@ Builder = temporary object that collects data
                          ↓
                  final Product object
 ```
+
