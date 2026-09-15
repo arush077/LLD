@@ -18,6 +18,10 @@
 
 ---
 
+
+
+## PaymentStrategy
+
 ```
 ┌──────────┐       ┌──────────────────────────┐            ┌────────────────────────┐
 │   User   │ ────► │     PaymentService       │   has-a    │   PaymentStrategy      │
@@ -37,18 +41,70 @@
                                              └────────────┘     └────────────┘     └──────────┘
 ```
 
+
+
+## PricingStrategy
+
 ```
-1. User can only interact with PaymentService(contextClass).
-2. PaymentService processPayment ke andar PaymentStrategy ka pay call karta he 
-3. So, for that PaymentService must maintain a pointer of PaymentStrategy (PaymentService ke Constructor me assign kardena PaymentStrategy ko)
+┌──────────┐      ┌────────────────┐      ┌──────────────────────┐       ┌──────────────────────┐
+│   User   │─────►│Context/Service │─────►│PricingStrategyFactory│─────► │   PricingStrategy    │
+└──────────┘      ├────────────────┤      ├──────────────────────┤ has-a ├    <<interface>>     ┤
+                  │ - factory      │      │ - pricingStrategy    │       │──────────────────────│
+                  ├────────────────┤      ├──────────────────────┤       ┤                      │
+                  │ +calcPrice()   │      │ + getStrategy(type)  │       │ + calculatePrice()   │
+                  └────────────────┘      └──────────────────────┘       └──┬───────────────────┘
+                                                                            │
+                                                                        implements
+                                                                            │        
+                                                         ┌──────────────────┼──────────────────┐
+                                                         ▼                  ▼                  ▼
+                                                  ┌────────────┐     ┌────────────┐     ┌───────────┐  
+                                                  │    UPI     │     │ CreditCard │     │   Cash    │
+                                                  │            │     │            │     │           │
+                                                  │calcPrice() │     │calcPrice() │     │calcPrice()│
+                                                  └────────────┘     └────────────┘     └───────────┘
+```
+
+
+
+### Zomato
+
+```
+PricingStrategy                    PaymentStrategy
+├── NormalPricing                  ├── UPIPayment
+├── PeakHourPricing                ├── CardPayment
+└── SurgePricing                   └── CashPayment
+```
+
+
+
+### Uber
+
+```
+PricingStrategy                    PaymentStrategy
+├── CabPricing                     ├── UPIPayment
+├── AutoPricing                    ├── CardPayment
+└── BikePricing                    └── CashPayment
+```
+
+
+
+### Hotel Booking
+
+```
+PricingStrategy                    PaymentStrategy
+├── StandardPricing                ├── CardPayment
+├── SeasonalPricing                ├── UPIPayment
+└── WeekendPricing                 └── CashPayment
+```
+
 
 
 ## Famous real-world examples
 
-* Payment methods
-* Sorting algorithms
-* Compression algorithms
-* Route finding / navigation
-* Discount calculation
-```
+- Payment methods
+- Sorting algorithms
+- Compression algorithms
+- Route finding / navigation
+- Discount calculation
 
