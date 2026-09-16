@@ -2,6 +2,7 @@
 import java.util.*;
 import java.time.LocalDate;
 
+// HotelManagementService is singleton because it is the central service or central coordinator
 class HotelManagementService{
     private static HotelManagementService instance;
     PaymentStrategy paymentStrategy;
