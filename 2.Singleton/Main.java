@@ -18,7 +18,7 @@ class Singleton {
 public class Main{
     public static void main(String[] args) {
 
-        // You need to create obj like this only Singleton.getInstance(); as constructor is pvt
+
         Singleton.getInstance();
         Singleton.getInstance();
         Singleton.getInstance();
